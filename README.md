@@ -1,4 +1,4 @@
-=== Timely All-in-One Events Calendar ===
+# Timely All-in-One Events Calendar
 Contributors: timelynetwork, leroyrosales
 Tags: calendar, event, events, event manager, event management
 Requires at least: 5.0
