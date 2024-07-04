@@ -4,6 +4,20 @@ use Kigkonsult\Icalcreator\IcalXML;
 use Kigkonsult\Icalcreator\TimezoneHandler;
 use Kigkonsult\Icalcreator\Vcalendar;
 
+function squish($strings) {
+     // I would REALLY like to know why join() doesn't work here
+     $result = "";
+     $first = true;
+     foreach ($strings as $str) {
+         if (!$first) {
+             $result = $result . " & ";
+         }
+         $first = false;
+         $result = $result . $str;
+     }
+     return $result;
+}
+
 /**
  * The ics import/export engine.
  *
@@ -818,11 +832,21 @@ class Ai1ec_Ics_Import_Export_Engine
         // =========================
         // = Summary & description =
         // =========================
+        //
+        $custom = get_post_custom($event->get('post_id'));
+        $band = squish($custom["Band"]);
+        $caller = squish($custom["Caller"]);
+        if (false) {
+            $title = $event->get("post")->post_title;
+        } else {
+            $location_alias = squish($custom["location_alias"]);
+            $title = "Dance @ $location_alias: $band w/ $caller";
+        }
         $e->setProperty(
             'summary',
             $this->_sanitize_value(
                 html_entity_decode(
-                    apply_filters( 'the_title', $event->get( 'post' )->post_title ),
+                    apply_filters( 'the_title', $title ),
                     ENT_QUOTES,
                     'UTF-8'
                 )

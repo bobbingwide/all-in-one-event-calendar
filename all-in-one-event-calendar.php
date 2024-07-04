@@ -1,10 +1,10 @@
 <?php
 /**
- * Plugin Name: All-in-One Event Calendar by Time.ly
+ * Plugin Name: All-in-One Event Calendar CBDC mod
  * Plugin URI: https://wordpress.org/plugins/all-in-one-event-calendar/
  * Description: A calendar system with month, week, day, agenda views, upcoming events widget, color-coded categories, recurrence, and import/export of .ics feeds.
- * Author: Time.ly Network Inc.
- * Author URI: https://time.ly/
+ * Author: Time.ly Network Inc. & CBDC
+ * Author URI: https://github.com/Chicago-Barn-Dance-Company/all-in-one-event-calendar
  * Version: 3.0.1
  * Text Domain: all-in-one-event-calendar
  * Domain Path: /language

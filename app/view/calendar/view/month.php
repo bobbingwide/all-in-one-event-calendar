@@ -390,6 +390,7 @@ class Ai1ec_Calendar_View_Month extends Ai1ec_Calendar_View_Abstract {
                             ),
                             '',
                             false ),
+                    'custom'        => get_post_custom($evt->get('post_id')),
                 );
                 $meta = $this->_registry->get( 'model.meta-post' );
                 if ( ! $event_data['ticket_url'] ) {
