@@ -84,7 +84,7 @@
 			<div class="ai1ec-field-value {{ col2 }} p-location">
 			{% for band in custom.Band %}
 				{{ band | raw }}
-			{% if not loop.last %} and {%endif%}
+				{% if not loop.last %} and {%endif%}
 			{%- endfor %}
 			</div>
 		</div>
@@ -95,7 +95,7 @@
 			<div class="ai1ec-field-value {{ col2 }} p-location">
 			{% for caller in custom.Caller %}
 				{{ caller | raw }}
-			{% if not loop.last %} and {%endif%}
+				{% if not loop.last %} and {%endif%}
 			{%- endfor %}
 			</div>
 		</div>
@@ -106,7 +106,7 @@
 			<div class="ai1ec-field-value {{ col2 }} p-location">
 			{% for lesson in custom.Lesson %}
 				{{ lesson | raw }}
-			{% if not loop.last %} and {%endif%}
+				{% if not loop.last %} and {%endif%}
 			{%- endfor %}
 			</div>
 		</div>
