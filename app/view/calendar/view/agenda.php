@@ -318,6 +318,7 @@ class Ai1ec_Calendar_View_Agenda extends Ai1ec_Calendar_View_Abstract {
             $event_props['category_divider_color'] = $event->get_runtime(
                 'category_divider_color'
             );
+            $event_props['custom'] = get_post_custom($event->get('post_id'));
 
             $meta = $this->_registry->get( 'model.meta-post' );
             if ( ! $event_props['ticket_url'] ) {
