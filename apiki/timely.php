@@ -30,8 +30,12 @@ if ( ! defined( 'TIMELY_JS_BASE_PATH' ) ) {
 	define( 'TIMELY_JS_BASE_PATH', TIMELY_PATH . '/dist/js' );
 }
 
-if ( ! defined( 'TIMELY_URL' ) ) {
-	define( 'TIMELY_URL', 'https://app.time.ly' );
+if ( ! defined( 'TIMELY_DASHBOARD_URL' ) ) {
+	define( 'TIMELY_DASHBOARD_URL', 'https://app.time.ly' );
+}
+
+if ( ! defined( 'TIMELY_API_URL' ) ) {
+	define( 'TIMELY_API_URL', 'https://timelyapp.time.ly/api' );
 }
 
 if ( file_exists( __DIR__ . '/vendor/autoload.php' ) ) {

@@ -57,7 +57,7 @@ class Auth {
 
 	/** @return array<string> */
 	public static function is_auth(): array {
-		return Requests::timely_request( Requests::API_URL . '/users/me' );
+		return Requests::timely_request( TIMELY_API_URL . '/users/me' );
 	}
 
 }

@@ -5,7 +5,7 @@
  *
  * @author     Time.ly Network Inc.
  * @since      2.0
- * Crew Manager modified line 159 to fix PHP 8.1 warning
+ *
  * @package    AI1EC
  * @subpackage AI1EC.query
  */
@@ -156,7 +156,7 @@ class Ai1ec_Query_Helper {
         $elements = preg_split(
             '/\$(\d+)/',
             $query,
-            0, // was null but caused PHP 8.1 warning
+            null,
             PREG_SPLIT_DELIM_CAPTURE
         );
         $result = '';

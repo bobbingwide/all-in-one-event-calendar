@@ -7,8 +7,6 @@ namespace App\Services\ApiUtils;
  */
 class Requests {
 
-	public const API_URL = 'https://timelyapp.time.ly/api';
-
 	/** @return array<string> */
 	public static function timely_request( string $url ): array {
 		$args = array(
@@ -19,10 +17,13 @@ class Requests {
 		);
 
 		$response = wp_remote_get( $url, $args );
+		$responseCode =  wp_remote_retrieve_response_code( $response );
 
-		if ( 200 !== wp_remote_retrieve_response_code( $response ) ) {
+		if ( 200 !== $responseCode) {
 			if ( 401 === wp_remote_retrieve_response_code( $response ) ) {
 				Auth::delete_user_token();
+			} else {
+				echo sprintf('<!-- AI1EC Error when calling url %s, http response code: %d, args: %s-->', $url, $responseCode, print_r($args, true));
 			}
 
 			return [];

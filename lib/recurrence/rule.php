@@ -42,7 +42,7 @@ class Ai1ec_Recurrence_Rule extends Ai1ec_Base {
                 $this->_ending_sentence( $txt, $rc );
                 break;
             default:
-                (!empty($rrule)) ? $processed = explode( '=', $rrule ) : $processed = array();;
+                $processed = explode( '=', $rrule );
                 if (
                     isset( $processed[1] ) &&
                     in_array(

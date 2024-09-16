@@ -340,7 +340,7 @@ class Ai1ec_Javascript_Controller {
     public function load_admin_js() {
         // Initialize dashboard view
 
-        $script_to_load = [];
+        $script_to_load = FALSE;
         if ( $this->are_we_on_calendar_feeds_page() === TRUE ) {
             // Load script for the importer plugins
             $script_to_load[] = self::CALENDAR_FEEDS_PAGE;

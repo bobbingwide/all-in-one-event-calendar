@@ -28,7 +28,7 @@ class Timely extends AbstractHookProvider {
 			'25.1651656'
 		);
 
-		$response = Requests::timely_request( Requests::API_URL . '/products/settings/cms' );
+		$response = Requests::timely_request( TIMELY_API_URL. '/products/settings/cms' );
 		$sign_in = 'timely_signin';
 		$get_data = filter_input_array( INPUT_GET );
 		$page = null;
@@ -36,6 +36,8 @@ class Timely extends AbstractHookProvider {
 		if ( isset( $get_data['page'] ) && false !== strpos( $get_data['page'], 'timely' ) ) {
 			$page = $get_data['page'];
 		}
+
+		$items_menu = [];
 
 		if ( ! $response ) {
 			if ( $page && $page !== $sign_in ) {
@@ -52,6 +54,14 @@ class Timely extends AbstractHookProvider {
 				$sign_in,
 				array( $this, 'build_app' )
 			);
+
+			global $wp;
+			$current_url = home_url( add_query_arg( $wp->query_vars, $wp->request ) );
+	
+			$signInUrl = TIMELY_DASHBOARD_URL . '/login?cms=1&callback_url=' . urlencode($current_url); // fallback url when using page=timely
+			$items_menu[ 'timely' ] = $signInUrl;
+			$items_menu[ $sign_in ] = $signInUrl;
+
 		} else {
 			$response_menu = $response['menu'];
 			$response_embed = $response['embed_calendar'];
@@ -77,14 +87,15 @@ class Timely extends AbstractHookProvider {
 				}
 			}
 
-			$items_menu = [];
-
+			// fallback url when using page=timely
+			$items_menu[ 'timely' ] = TIMELY_DASHBOARD_URL;
+			
 			foreach ( $response_menu as $item_menu ) {
 				$menu_name = $item_menu['name'];
 
 				/* set url */
 				if ( $item_menu['url'] && false === strpos( $item_menu['url'], '://' ) ) {
-					$item_menu['url'] = TIMELY_URL . $item_menu['url'];
+					$item_menu['url'] = TIMELY_DASHBOARD_URL . $item_menu['url'];
 				}
 
 				$slug = 'timely_' . str_replace( '+', '_', urlencode( strtolower( $menu_name ) ) );
@@ -117,11 +128,12 @@ class Timely extends AbstractHookProvider {
 				);
 			}
 
-			if ( wp_cache_get( 'timely_items_menu' ) ) {
-				wp_cache_replace( 'timely_items_menu', $items_menu );
-			} else {
-				wp_cache_set( 'timely_items_menu', $items_menu );
-			}
+		}
+
+		if ( wp_cache_get( 'timely_items_menu' ) ) {
+			wp_cache_replace( 'timely_items_menu', $items_menu );
+		} else {
+			wp_cache_set( 'timely_items_menu', $items_menu );
 		}
 
 		remove_submenu_page( Menu::MENU_NAME, Menu::MENU_NAME );
@@ -140,26 +152,8 @@ class Timely extends AbstractHookProvider {
 
 		wp_enqueue_script( 'timely-iframe', TIMELY_PATH . '/dist/iframe.js', array( 'jquery' ), 1.0, false );
 
-		global $wp;
 		$nonce = wp_create_nonce( 'auth_token_nonce' );
 		$items_menu = wp_cache_get( 'timely_items_menu' );
-		$current_url = home_url( add_query_arg( $wp->query_vars, $wp->request ) );
-		$url = Auth::is_auth()
-			? TIMELY_URL . '?cms=1&callback_url=' . urlencode( $current_url )
-			: TIMELY_URL . '/login?cms=1&callback_url=' . urlencode( $current_url );
-
-		if ( $items_menu ) {
-			$get_data = filter_input_array( INPUT_GET );
-			$page = null;
-
-			if ( isset( $get_data['page'] ) && false !== strpos( $get_data['page'], 'timely' ) ) {
-				$page = $get_data['page'];
-			}
-
-			if ( Requests::timely_request( $items_menu[ $page ] ) ) {
-				$url = $items_menu[ $page ];
-			}
-		}
 
 		wp_localize_script(
 			'timely-iframe',
@@ -167,7 +161,6 @@ class Timely extends AbstractHookProvider {
 			array(
 				'xhr_url' => admin_url( 'admin-ajax.php' ),
 				'auth_token_nonce' => $nonce,
-				'iframe_url' => $url,
 			)
 		);
 
@@ -249,9 +242,7 @@ class Timely extends AbstractHookProvider {
 		?>
 		<h1>Embed calendar</h1>
 		<h2><?php echo wp_kses_post( get_option( 'timely_embed_calendar_instruction' ) ); ?></h2>
-		<h3>Calendar example:</h3>
 		<?php
-		echo do_shortcode( '[timely-calendar]' );
 	}
 
 }

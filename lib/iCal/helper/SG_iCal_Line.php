@@ -4,7 +4,7 @@
  * A class for storing a single (complete) line of the iCal file.
  * Will find the line-type, the arguments and the data of the file and
  * store them.
- * cm fixed php 8.2 errors
+ *
  * The line-type can be found by querying getIdent(), data via either
  * getData() or typecasting to a string.
  * Params can be access via the ArrayAccess. A iterator is also avilable
@@ -14,7 +14,6 @@
  * @author Morten Fangel (C) 2008
  * @license http://creativecommons.org/licenses/by-sa/2.5/dk/deed.en_GB CC-BY-SA-DK
  */
-
 class SG_iCal_Line implements ArrayAccess, Countable, IteratorAggregate {
     protected $ident;
     protected $data;
@@ -112,7 +111,6 @@ class SG_iCal_Line implements ArrayAccess, Countable, IteratorAggregate {
     /**
      * @see ArrayAccess.offsetExists
      */
-     #[\ReturnTypeWillChange]
     public function offsetExists( $param ) {
         return isset($this->params[ strtolower($param) ]);
     }
@@ -120,7 +118,6 @@ class SG_iCal_Line implements ArrayAccess, Countable, IteratorAggregate {
     /**
      * @see ArrayAccess.offsetGet
      */
-     #[\ReturnTypeWillChange]
     public function offsetGet( $param ) {
         $index = strtolower($param);
         if (isset($this->params[ $index ])) {
@@ -132,7 +129,6 @@ class SG_iCal_Line implements ArrayAccess, Countable, IteratorAggregate {
      * Disabled ArrayAccess requirement
      * @see ArrayAccess.offsetSet
      */
-     #[\ReturnTypeWillChange]
     public function offsetSet( $param, $val ) {
         return false;
     }
@@ -141,7 +137,6 @@ class SG_iCal_Line implements ArrayAccess, Countable, IteratorAggregate {
      * Disabled ArrayAccess requirement
      * @see ArrayAccess.offsetUnset
      */
-     #[\ReturnTypeWillChange]
     public function offsetUnset( $param ) {
         return false;
     }
@@ -157,7 +152,6 @@ class SG_iCal_Line implements ArrayAccess, Countable, IteratorAggregate {
     /**
      * @see Countable.count
      */
-     #[\ReturnTypeWillChange]
     public function count() {
         return count($this->params);
     }
@@ -165,7 +159,6 @@ class SG_iCal_Line implements ArrayAccess, Countable, IteratorAggregate {
     /**
      * @see IteratorAggregate.getIterator
      */
-     #[\ReturnTypeWillChange]
     public function getIterator() {
         return new ArrayIterator($this->params);
     }

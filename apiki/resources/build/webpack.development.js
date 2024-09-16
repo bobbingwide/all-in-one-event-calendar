@@ -4,6 +4,7 @@
 const { ProvidePlugin, WatchIgnorePlugin } = require('webpack');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const ImageminPlugin = require('imagemin-webpack-plugin').default;
 const ManifestPlugin = require('webpack-manifest-plugin');
 
 /**
@@ -13,7 +14,6 @@ const utils = require('./lib/utils');
 const configLoader = require('./config-loader');
 const spriteSmith = require('./spritesmith');
 const postcss = require('./postcss');
-const browsersync = require('./browsersync');
 
 /**
  * Setup the env.
@@ -26,7 +26,7 @@ const { env: envName } = utils.detectEnv();
 const babelLoader = {
   loader: 'babel-loader',
   options: {
-    cacheDirectory: true,
+    cacheDirectory: false,
     comments: false,
     presets: [
       [
@@ -37,7 +37,7 @@ const babelLoader = {
           },
         },
       ],
-      '@babel/react',
+      '@babel/react'
     ],
   },
 };
@@ -64,7 +64,38 @@ const plugins = [
   }),
   extractSass,
   spriteSmith,
-  browsersync,
+  new ImageminPlugin({
+    optipng: {
+      optimizationLevel: 7,
+    },
+    gifsicle: {
+      optimizationLevel: 3,
+    },
+    svgo: {
+      plugins: [
+        { cleanupAttrs: true },
+        { removeDoctype: true },
+        { removeXMLProcInst: true },
+        { removeComments: true },
+        { removeMetadata: true },
+        { removeUselessDefs: true },
+        { removeEditorsNSData: true },
+        { removeEmptyAttrs: true },
+        { removeHiddenElems: false },
+        { removeEmptyText: true },
+        { removeEmptyContainers: true },
+        { cleanupEnableBackground: true },
+        { removeViewBox: true },
+        { cleanupIDs: false },
+        { convertStyleToAttrs: true },
+      ],
+    },
+    plugins: [
+      require('imagemin-mozjpeg')({
+        quality: 100,
+      }),
+    ],
+  }),
   new ManifestPlugin(),
 ];
 
@@ -185,8 +216,8 @@ module.exports = {
    * Setup the development tools.
    */
   mode: envName,
-  cache: true,
+  cache: false,
   bail: false,
-  watch: true,
-  devtool: 'source-map',
+  watch: false,
+  devtool: false,
 };

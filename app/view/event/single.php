@@ -54,7 +54,7 @@ class Ai1ec_View_Event_Single extends Ai1ec_Base {
         $timezone_info = array(
             'show_timezone'       => $this->_registry->get( 'model.settings' )->get( 'always_use_calendar_timezone' ),
             'using_calendar_tz'   => $this->_registry->get( 'model.settings' )->get( 'always_use_calendar_timezone' ),
-            'event_timezone'      => ( !empty($event->get( 'timezone_name') ) ) ? str_replace( '_', ' ', $event->get( 'timezone_name' ) ) . ' ' . __( 'Timezone', AI1EC_PLUGIN_NAME ) : null,
+            'event_timezone'      => str_replace( '_', ' ', $event->get( 'timezone_name' ) ) . ' ' . __( 'Timezone', AI1EC_PLUGIN_NAME ),
             'calendar_timezone'   => str_replace( '_', ' ', $default_tz ) . ' ' . __( 'Timezone', AI1EC_PLUGIN_NAME ),
         );
 
@@ -112,8 +112,8 @@ class Ai1ec_View_Event_Single extends Ai1ec_Base {
             'instance_id'             => $event->get( 'instance_id' ),
             'title'                   => $event->get( 'post' )->post_title,
             'description'             => $event->get( 'post' )->post_content,
-            'custom'        => get_post_custom($event->get('post_id')),
-        );
+	    'custom'        	      => get_post_custom($event->get('post_id')),
+);
 
         if (
             ! empty( $args['recurrence'] ) &&
@@ -228,11 +228,11 @@ class Ai1ec_View_Event_Single extends Ai1ec_Base {
      */
     public function get_footer( Ai1ec_Event $event ) {
 
-        $text_calendar_feed = $feed_url = null;
+        $text_calendar_feed = null;
 
-        if (!empty($event->get( 'ical_feed_url' ))) $feed_url = trim( strtolower( $event->get( 'ical_feed_url' ) ) );
+        $feed_url = trim( strtolower( $event->get( 'ical_feed_url' ) ) );
 
-        if ( !empty($feed_url) && strpos( $feed_url, 'http' ) === 0 ) {
+        if ( strpos( $feed_url, 'http' ) === 0 ) {
             $text_calendar_feed = Ai1ec_I18n::__(
                 'This post was replicated from another site\'s <a href="%s" title="iCalendar feed"><i class="ai1ec-fa ai1ec-fa-calendar"></i> calendar feed</a>.'
             );
@@ -243,7 +243,7 @@ class Ai1ec_View_Event_Single extends Ai1ec_Base {
         }
 
         $loader = $this->_registry->get( 'theme.loader' );
-        if (!empty($event->get( 'ical_feed_url' ))) $text_calendar_feed = sprintf(
+        $text_calendar_feed = sprintf(
             $text_calendar_feed,
             esc_attr( str_replace( 'http://', 'webcal://', $event->get( 'ical_feed_url' ) ) )
         );

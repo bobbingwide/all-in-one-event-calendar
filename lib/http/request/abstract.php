@@ -1,7 +1,7 @@
 <?php
 /**
  * Abstract request parsing class.
- * Crew Manager Modified for PHP 8.1 warnings
+ *
  * @author     Time.ly Network Inc.
  * @since      2.0
  *
@@ -195,7 +195,6 @@ abstract class Ai1ec_Abstract_Query extends Ai1ec_Base implements arrayaccess {
     /**
      * @overload ArrayAccess::offsetExists()
      */
-    #[\ReturnTypeWillChange]
     public function offsetExists( $offset ) {
         if ( false === $this->get( $offset ) ) {
             return false;
@@ -206,7 +205,6 @@ abstract class Ai1ec_Abstract_Query extends Ai1ec_Base implements arrayaccess {
     /**
      * @overload ArrayAccess::offsetGet()
      */
-    #[\ReturnTypeWillChange]
     public function offsetGet( $offset ) {
         return $this->get_scalar( $offset );
     }
@@ -214,7 +212,6 @@ abstract class Ai1ec_Abstract_Query extends Ai1ec_Base implements arrayaccess {
     /**
      * @overload ArrayAccess::offsetSet()
      */
-    #[\ReturnTypeWillChange]
     public function offsetSet( $offset, $value ) {
         // not implemented and will not be
     }
@@ -222,7 +219,6 @@ abstract class Ai1ec_Abstract_Query extends Ai1ec_Base implements arrayaccess {
     /**
      * @overload ArrayAccess::offsetUnset()
      */
-    #[\ReturnTypeWillChange]
     public function offsetUnset( $offset ) {
         // not implemented and will not be
     }
