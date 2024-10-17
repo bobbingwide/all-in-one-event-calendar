@@ -29,7 +29,7 @@ class Ai1ec_View_Activate extends Ai1ec_View_Admin_Abstract {
             array( $this, 'display_page' )
         );
 
-        if ( $this->isLoggedIn() ) {
+        if ( true) {
             remove_submenu_page( AI1EC_ADMIN_BASE_URL, AI1EC_PLUGIN_NAME . '-activate' );
         } else {
             if ( isset( $submenu[AI1EC_ADMIN_BASE_URL] ) ) {
