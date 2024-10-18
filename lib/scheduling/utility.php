@@ -27,6 +27,7 @@ class Ai1ec_Scheduling_Utility {
      * @var Ai1ec_Registry_Object The registry object.
      */
     private $_registry;
+    private $_updated;
 
     /**
      * Constructor
