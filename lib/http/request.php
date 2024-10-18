@@ -11,6 +11,7 @@
  */
 class Ai1ec_Http_Request {
 
+    private $_registry;
     /**
      * Public constructor
      *

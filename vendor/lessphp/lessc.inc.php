@@ -63,6 +63,7 @@ if ( ! class_exists( 'lessc' ) ) {
         static public $defaultValue = array("keyword", "");
 
         static protected $nextImportId = 0; // uniquely identify imports
+        private $formatterName;
 
         // attempts to find the path of an import url, returns null for css files
         protected function findImport($url) {
@@ -1212,7 +1213,7 @@ if ( ! class_exists( 'lessc' ) ) {
                         $name = $name . ": ";
                     }
 
-                    $this->throwError("${name}expecting $expectedArgs arguments, got $numValues");
+                    $this->throwError("{$name}expecting $expectedArgs arguments, got $numValues");
             }
 
                 return $values;
@@ -1557,7 +1558,7 @@ if ( ! class_exists( 'lessc' ) ) {
             }
 
             // type based operators
-            $fname = "op_${ltype}_${rtype}";
+            $fname = "op_{$ltype}_{$rtype}";
             if (is_callable(array($this, $fname))) {
                 $out = $this->$fname($op, $left, $right);
                 if (!is_null($out)) return $out;
