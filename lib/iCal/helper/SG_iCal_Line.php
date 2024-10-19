@@ -111,14 +111,14 @@ class SG_iCal_Line implements ArrayAccess, Countable, IteratorAggregate {
     /**
      * @see ArrayAccess.offsetExists
      */
-    public function offsetExists( $param ) {
+    public function offsetExists( $param ) :bool {
         return isset($this->params[ strtolower($param) ]);
     }
 
     /**
      * @see ArrayAccess.offsetGet
      */
-    public function offsetGet( $param ) {
+    public function offsetGet( $param ) :bool {
         $index = strtolower($param);
         if (isset($this->params[ $index ])) {
             return $this->params[ $index ];
@@ -129,16 +129,16 @@ class SG_iCal_Line implements ArrayAccess, Countable, IteratorAggregate {
      * Disabled ArrayAccess requirement
      * @see ArrayAccess.offsetSet
      */
-    public function offsetSet( $param, $val ) {
-        return false;
+    public function offsetSet( $param, $val ) :void {
+        //return false;
     }
 
     /**
      * Disabled ArrayAccess requirement
      * @see ArrayAccess.offsetUnset
      */
-    public function offsetUnset( $param ) {
-        return false;
+    public function offsetUnset( $param ) :void {
+        //return false;
     }
 
     /**
@@ -152,14 +152,14 @@ class SG_iCal_Line implements ArrayAccess, Countable, IteratorAggregate {
     /**
      * @see Countable.count
      */
-    public function count() {
+    public function count() :int{
         return count($this->params);
     }
 
     /**
      * @see IteratorAggregate.getIterator
      */
-    public function getIterator() {
+    public function getIterator() :Traversable {
         return new ArrayIterator($this->params);
     }
 }
