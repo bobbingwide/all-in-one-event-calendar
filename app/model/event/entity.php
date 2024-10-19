@@ -9,6 +9,7 @@
  * @package      Ai1EC
  * @subpackage   Ai1EC.Model
  */
+#[\AllowDynamicProperties]
 class Ai1ec_Event_Entity extends Ai1ec_Base {
 
     /**
