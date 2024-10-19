@@ -19,6 +19,9 @@ class Ai1ec_Recurrence_Rule extends Ai1ec_Base {
      * @return string
      */
     public function rrule_to_text( $rrule = '' ) {
+        if ( null === $rrule ) {
+            $rrule = '';
+        }
         $txt = '';
         $rc  = new SG_iCal_Recurrence( new SG_iCal_Line( 'RRULE:' . $rrule ) );
         switch( $rc->getFreq() ) {
